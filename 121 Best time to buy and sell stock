@@ -1,0 +1,39 @@
+class Solution {
+
+public int maxProfit (int[] prices) {
+
+int minSoFar = prices[0];
+
+int ans =0;
+
+for(int i=1; i < prices.length; i++)
+
+d
+
+{
+
+int profit = prices[i] minSoFar;
+
+if(profit > ans)
+
+{
+
+ans = profit;
+
+}
+
+minSoFar = Math.min(prices[i], minSoFar);
+
+}
+
+return ans;
+
+}
+
+}
+
+If you can see the complexity for this problem is o(n)
+the reason it is o(n) is because we have this loop which is running n Times
+and in every iteration of the slope we are just updating some variables some standard the int variable 
+which updation so each iteration of the slope will cost o(n) time
+and this loop is running o of n-1 which is basically o(n) only.
