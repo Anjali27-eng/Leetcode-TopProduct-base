@@ -1,0 +1,56 @@
+class Solution {
+
+public void rotate(int[] nums, int k){
+
+int n = nums.length; 
+
+k = k %n;
+
+//k=3 %7-3
+
+//k=3
+
+//reverse the whole array
+
+//reverse(nums, 8, 6); // [7,6,5,4,3,2,1]
+
+reverse(nums, 0, n-1);
+
+//reverse 1st k-1 number if K-3 then k-1 is till index 2
+
+//reverse(nums, 0, 2); // [5,6,7,4,3,2,1]
+
+reverse (nums, 0, k-1);
+
+//reverse last n-1 number starts from k if k=3 it then reverse starts from k
+
+//reverse (nums, 3, 6); // [5,6,7,1,2,3,4]
+
+reverse(nums, k, n-1);
+
+}
+
+void reverse(int[] nums, int start, int end)
+{
+
+
+//Helper function to reverse the array
+
+int i=start, j=end;
+
+while(i<j)
+
+{
+
+int temp= nums[i];
+
+nums[i] = nums[j];
+
+nums[j] = temp;
+
+i++;
+j--
+}
+}
+
+now the beauty of the solution is just takes time complexity is o(n)
