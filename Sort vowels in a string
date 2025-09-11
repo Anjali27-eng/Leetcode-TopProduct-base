@@ -1,0 +1,124 @@
+class Solution {
+    #define pci pair<char,int>
+    int isVowel(const char& c){
+        return (c=='A' or c=='a' or c=='E' or c=='e' or c=='I' or c=='i' or c=='O' or c=='o' or c=='U' or c=='u');
+    }
+public:
+    string sortVowels(string s) {
+        int n=s.size();
+
+        // Step-1: Count vowel frequency
+        map<char,int> vowel_freq;
+        for(int i=0;i<n;++i){
+            if(isVowel(s[i]))
+                vowel_freq[s[i]]++;
+        }
+
+        vector<pci> freq;
+        for(pair vf: vowel_freq)
+            freq.push_back(vf);
+        
+        // Step-2: Update input string
+        int pos=0;
+        int i=0;
+        while(i<n and pos<freq.size()){
+            if(freq[pos].second==0){
+                pos++;
+                continue;
+            }
+            if(isVowel(s[i])){
+                s[i] = freq[pos].first;
+                freq[pos].second--;
+            }
+            i++;
+        }
+        return s;
+    }
+};
+/*
+//JAVA
+import java.util.*;
+
+public class Solution {
+    // mimic your isVowel (returns boolean in Java)
+    private boolean isVowel(char c) {
+        return (c=='A' || c=='a' || c=='E' || c=='e' ||
+                c=='I' || c=='i' || c=='O' || c=='o' ||
+                c=='U' || c=='u');
+    }
+
+    public String sortVowels(String s) {
+        int n = s.length();
+
+        // Step-1: Count vowel frequency using a TreeMap to mimic C++ std::map ordering
+        Map<Character,Integer> vowel_freq = new TreeMap<>();
+        for (int i = 0; i < n; ++i) {
+            char ch = s.charAt(i);
+            if (isVowel(ch)) {
+                vowel_freq.put(ch, vowel_freq.getOrDefault(ch, 0) + 1);
+            }
+        }
+
+        // vector<pci> freq;
+        List<AbstractMap.SimpleEntry<Character, Integer>> freq = new ArrayList<>();
+        for (Map.Entry<Character,Integer> vf : vowel_freq.entrySet()) {
+            freq.add(new AbstractMap.SimpleEntry<>(vf.getKey(), vf.getValue()));
+        }
+
+        // Step-2: Update input string
+        int pos = 0;
+        int i = 0;
+        char[] arr = s.toCharArray();
+        while (i < n && pos < freq.size()) {
+            if (freq.get(pos).getValue() == 0) {
+                pos++;
+                continue;
+            }
+            if (isVowel(arr[i])) {
+                char newCh = freq.get(pos).getKey();
+                arr[i] = newCh;
+                freq.get(pos).setValue(freq.get(pos).getValue() - 1);
+            }
+            i++;
+        }
+        return new String(arr);
+    }
+}
+
+#Python
+class Solution:
+    def is_vowel(self, c: str) -> bool:
+        # same style as your C++ isVowel (returns truthy/falsy)
+        return (c == 'A' or c == 'a' or c == 'E' or c == 'e' or
+                c == 'I' or c == 'i' or c == 'O' or c == 'o' or
+                c == 'U' or c == 'u')
+
+    def sortVowels(self, s: str) -> str:
+        n = len(s)
+
+        # Step-1: Count vowel frequency using a dict (we'll iterate keys in sorted order to mimic std::map)
+        vowel_freq = {}
+        for ch in s:
+            if self.is_vowel(ch):
+                vowel_freq[ch] = vowel_freq.get(ch, 0) + 1
+
+        # Build the freq list in sorted key order (std::map iteration order)
+        freq = []
+        for k in sorted(vowel_freq.keys()):
+            freq.append([k, vowel_freq[k]])  # [char, count]
+
+        # Step-2: Update input string
+        pos = 0
+        i = 0
+        sb = list(s)
+        while i < n and pos < len(freq):
+            if freq[pos][1] == 0:
+                pos += 1
+                continue
+            if self.is_vowel(sb[i]):
+                sb[i] = freq[pos][0]
+                freq[pos][1] -= 1
+            i += 1
+
+        return "".join(sb)
+*/
