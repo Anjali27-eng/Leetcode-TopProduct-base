@@ -1,0 +1,39 @@
+//code in java
+
+class Solution {
+    public int countCoveredBuildings(int n, int[][] buildings) {
+        int[] xLeft = new int[n + 1]; //tracks the leftMost x  for each y
+        int[] xRight = new int[n + 1]; //tracks the rightMost x  for each y
+        int[] yLeft = new int[n + 1]; //tracks the leftMost y  for each x //upper
+        int[] yRight = new int[n + 1]; //tracks the rightMost y  for each x //lower
+        int total = buildings.length;
+
+        for (int i = 1; i <= n; i++) {
+            xRight[i] = 0;
+            xLeft[i] = n + 1;
+            yRight[i] = 0;
+            yLeft[i] = n + 1;
+        }
+
+        for (int[] building : buildings) {
+            int x = building[0];
+            int y = building[1];
+            xLeft[y] = Math.min(xLeft[y], x); // update the left boundary for y
+            xRight[y] = Math.max(xRight[y], x); // update the right boundary for y
+            yLeft[x] = Math.min(yLeft[x], y); // update the left boundary for x
+            yRight[x] = Math.max(yRight[x], y); // update the right boundary for x
+        }
+
+        int result =total;
+        for(int[] building : buildings){
+            int x = building[0];
+            int y = building[1];
+            if(x > xLeft[y] && x < xRight[y] && y > yLeft[x]  && y <  yRight[x] ){
+                continue;
+            }else{
+                result -= 1;
+            }
+        }
+    return result;
+    }
+}
